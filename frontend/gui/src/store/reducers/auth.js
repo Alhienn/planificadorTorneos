@@ -13,7 +13,8 @@ const initialState = {
   token: localStorage.getItem('token'),
   isAuthenticated: false,
   isLoading: false,
-  user: null
+  user: null,
+  remember: false,
 }
 
 export default function(state = initialState, action) {
@@ -32,7 +33,7 @@ export default function(state = initialState, action) {
       }
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
-      localStorage.setItem('token', action.payload.token);
+      if(action.payload.remember) localStorage.setItem('token', action.payload.token);
       return {
         ...state,
         ...action.payload,

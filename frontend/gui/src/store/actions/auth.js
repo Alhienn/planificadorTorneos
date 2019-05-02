@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 import {
-  USER_LOADING,
   USER_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
@@ -30,9 +29,7 @@ export const loadUser = () => (dispatch, getState) => {
     })
 }
 
-export const login = (username, password) => (dispatch) => {
-  dispatch({ type: USER_LOADING })
-
+export const login = (username, password, remember) => (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json'
@@ -43,9 +40,14 @@ export const login = (username, password) => (dispatch) => {
 
   axios.post('http://127.0.0.1:8000/api/auth/login', body, config)
     .then(res => {
+      let payload = {
+        ...res.data,
+        remember: remember
+      }
+      console.log(payload)
       dispatch({
         type: LOGIN_SUCCESS,
-        payload: res.data
+        payload: payload
       })
     }).catch(err => {
       console.log(err);
@@ -56,9 +58,7 @@ export const login = (username, password) => (dispatch) => {
     })
 }
 
-export const register = ({username, password, email}) => (dispatch) => {
-  dispatch({ type: USER_LOADING })
-
+export const register = ({username, password, email, remember}) => (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json'
@@ -69,9 +69,14 @@ export const register = ({username, password, email}) => (dispatch) => {
 
   axios.post('http://127.0.0.1:8000/api/auth/register', body, config)
     .then(res => {
+      let payload = {
+        ...res.data,
+        remember: remember
+      }
       dispatch({
         type: REGISTER_SUCCESS,
-        payload: res.data
+        remember: remember,
+        payload: payload
       })
     }).catch(err => {
       console.log(err);
@@ -83,7 +88,6 @@ export const register = ({username, password, email}) => (dispatch) => {
 }
 
 export const logout = () => (dispatch, getState) => {
-
   const config = tokenConfig(getState);
 
   axios.post('http://127.0.0.1:8000/api/auth/logout',null, config)

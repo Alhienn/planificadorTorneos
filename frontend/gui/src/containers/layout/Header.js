@@ -8,7 +8,8 @@ import { logout } from '../../store/actions/auth';
  
 class Header extends Component {
   static propTypes = {
-    auth: PropTypes.object.isRequired
+    auth: PropTypes.object.isRequired,
+    logout: PropTypes.func.isRequired
   }
   
   render() {
@@ -16,8 +17,11 @@ class Header extends Component {
 
     const authLinks = (
       <Nav className="ml-auto">
-        <NavDropdown title={user} id="nav-dropdown">
-          <NavDropdown.Item>Cerrar Sesión</NavDropdown.Item>
+        <NavDropdown
+          alignRight
+          title={user && user.username} id="nav-dropdown"
+        >
+          <NavDropdown.Item onClick={this.props.logout} >Cerrar Sesión</NavDropdown.Item>
         </NavDropdown>
       </Nav>
     );
@@ -48,7 +52,7 @@ class Header extends Component {
 }
 
 const mapStateToProps = state => ({
-  auth: state.authReducer
+  auth: state.authReducer,
 })
 
-export default connect(mapStateToProps)(Header)
+export default connect(mapStateToProps, { logout })(Header)
