@@ -23,10 +23,10 @@ export const loadUser = () => (dispatch, getState) => {
       })
     }).catch(err => {
       console.log(err);
-      dispatch(returnErrors(err.response.data, err.response.status));
       dispatch({
         type: AUTH_ERROR
       })
+      dispatch(returnErrors(err));
     })
 }
 
@@ -49,10 +49,10 @@ export const login = (username, password) => (dispatch) => {
       })
     }).catch(err => {
       console.log(err);
-      dispatch(returnErrors(err.response.data, err.response.status));
       dispatch({
         type: LOGIN_FAIL
       })
+      dispatch(returnErrors(err));
     })
 }
 
@@ -75,10 +75,10 @@ export const register = ({username, password, email}) => (dispatch) => {
       })
     }).catch(err => {
       console.log(err);
-      dispatch(returnErrors(err.response.data, err.response.status));
       dispatch({
         type: REGISTER_FAIL
       })
+      dispatch(returnErrors(err));
     })
 }
 
@@ -93,7 +93,7 @@ export const logout = () => (dispatch, getState) => {
       })
     }).catch(err => {
       console.log(err);
-      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch(returnErrors(err));
     })
 }
 
