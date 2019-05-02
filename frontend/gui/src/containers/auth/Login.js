@@ -107,7 +107,7 @@ class Login extends Component {
               <Button variant="primary" type="submit">
                 Iniciar Sesión
               </Button>
-              <span>¿Aún no tienes cuenta? <Link to="/register">Regístrate</Link></span>
+              <span>¿Aún no tienes cuenta?<Link to="/register">Regístrate</Link></span>
             </Col>
           </Row>
         </Form>

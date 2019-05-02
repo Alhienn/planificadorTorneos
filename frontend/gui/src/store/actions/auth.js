@@ -44,7 +44,6 @@ export const login = (username, password, remember) => (dispatch) => {
         ...res.data,
         remember: remember
       }
-      console.log(payload)
       dispatch({
         type: LOGIN_SUCCESS,
         payload: payload
@@ -58,14 +57,15 @@ export const login = (username, password, remember) => (dispatch) => {
     })
 }
 
-export const register = ({username, password, email, remember}) => (dispatch) => {
+export const register = (username, email,  password, remember) => (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json'
     }
   }
 
-  const body = JSON.stringify({ username, email,password })
+  const body = JSON.stringify({ username, email, password})
+  console.log(body)
 
   axios.post('http://127.0.0.1:8000/api/auth/register', body, config)
     .then(res => {
