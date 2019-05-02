@@ -4,6 +4,8 @@ import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from "react-router-bootstrap";
 import { connect } from 'react-redux';
 
+import { logout } from '../../store/actions/auth';
+ 
 class Header extends Component {
   static propTypes = {
     auth: PropTypes.object.isRequired
@@ -14,9 +16,9 @@ class Header extends Component {
 
     const authLinks = (
       <Nav className="ml-auto">
-        <LinkContainer to="/register">
-          <Nav.Link>{user}</Nav.Link>
-        </LinkContainer>
+        <NavDropdown title={user} id="nav-dropdown">
+          <NavDropdown.Item>Cerrar Sesión</NavDropdown.Item>
+        </NavDropdown>
       </Nav>
     );
 
@@ -32,7 +34,7 @@ class Header extends Component {
     );
 
     return (
-      <Navbar bg="light" expand="sm">
+      <Navbar bg="light" expand="sm" className="mb-4">
         <LinkContainer to="/">
           <Navbar.Brand>Planificador Torneos</Navbar.Brand>
         </LinkContainer>
