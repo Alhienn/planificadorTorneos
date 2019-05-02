@@ -4,19 +4,58 @@ import { Link } from 'react-router-dom';
 import { Form, Button, Row, Col, Container } from 'react-bootstrap';
 
 export default class Login extends Component {
+  constructor(...args) {
+    super(...args);
+
+    this.state= {
+      username: "",
+      password: "",
+      validated: false
+    }
+  }
   static propTypes = {
     prop: PropTypes
+  }
+
+  handleOnChange(event) {
+    this.setState(
+      {
+        [event.target]: {$set: event.target.value},
+      }
+    )
+  }
+
+  handleOnSubmit(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.stopPropagation();
+    }
+    
+    this.setState({ validated: true });
   }
 
   render() {
     return (
       <Container>
-        <Form>
+        <Form
+          noValidate
+          validated={this.state.validated}
+          onSubmit={e => this.handleOnSubmit(e)}
+        >
           <Row className="justify-content-center">
             <Col xs={12} sm={10} md={8} lg={6}>
             <Form.Group controlId="formUser">
               <Form.Label>Usuario</Form.Label>
-              <Form.Control type="text" required/>
+              <Form.Control 
+                type="text"
+                required
+                value={this.state.username}
+                onChange={e => this.handleOnChange(e)}
+              />
+              <Form.Control.Feedback type="invalid">
+                Introduce tu nombre de usuario.
+              </Form.Control.Feedback>
             </Form.Group>
             </Col>
           </Row>
@@ -25,7 +64,16 @@ export default class Login extends Component {
             <Col xs={12} sm={10} md={8} lg={6}>
               <Form.Group controlId="formPassword">
                 <Form.Label>Contraseña</Form.Label>
-                <Form.Control type="password" required minlenght="8"/>
+                <Form.Control 
+                  type="password"
+                  required 
+                  pattern=".{8,}"
+                  value={this.state.password}
+                  onChange={e => this.handleOnChange(e)}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {this.state.password.length === 0 ?"Introduce tu contraseña." : "Las contraseñas son de la menos 8 carácteres" }
+                </Form.Control.Feedback>
               </Form.Group>
             </Col>
           </Row>
