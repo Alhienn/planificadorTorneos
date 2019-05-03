@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import Header from './containers/layout/Header';
-import AppContainer from './containers/layout/AppContainer';
+import ErrorCleaner from './containers/layout/ErrorCleaner';
 import Login from './containers/auth/Login';
 import Register from './containers/auth/Register'
 import store from './store';
@@ -20,14 +20,14 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Router>
-          <AppContainer>
+          <ErrorCleaner>
             <Header />
             <Switch>
               <Route exact path="/"/>
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
             </Switch>
-            </AppContainer>
+            </ErrorCleaner>
         </Router>
       </Provider>
     );
