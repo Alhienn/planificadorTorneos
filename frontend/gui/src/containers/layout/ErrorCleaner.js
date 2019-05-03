@@ -13,7 +13,7 @@ class AppContainer extends Component {
   }
 
   componentWillMount() {
-    this.unlisten = this.props.history.listen((location, action) => {
+    this.unlisten = this.props.history.listen(() => {
       this.props.clearErrors();
     });
   }
