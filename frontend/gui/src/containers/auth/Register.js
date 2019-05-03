@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Form, Button, Row, Col, Container } from 'react-bootstrap';
+import { Form, Button, Spinner, Row, Col, Container } from 'react-bootstrap';
 
-import { register } from '../../store/actions/auth'
+import { register } from '../../store/actions/auth';
 
 class Register extends Component {
   constructor(props) {
@@ -21,12 +21,13 @@ class Register extends Component {
   }
   static propTypes = {
     register: PropTypes.func.isRequired,
+    isLoading: PropTypes.bool.isRequired,
     username: PropTypes.string,
     email: PropTypes.string,
     password: PropTypes.string,
     password2: PropTypes.string,
-    remember: PropTypes.bool.isRequired,
-    validated: PropTypes.bool.isRequired
+    remember: PropTypes.bool,
+    validated: PropTypes.bool
   }
 
   handleOnChange(event) {
@@ -50,15 +51,35 @@ class Register extends Component {
   }
 
   render() {
+    const registerButton = (
+      <Button variant="primary" type="submit">
+        Registrarse
+      </Button>
+    )
+
+    const loadingButton = (
+      <Button variant="primary" disabled>
+        <Spinner
+          as="span"
+          animation="border"
+          size="sm"
+          role="status"
+          aria-hidden="true"
+        />
+        <span className="ml-2">Cargando...</span>
+        <span className="sr-only">Cargando...</span>
+      </Button>
+    )
+
     return (
-      <Container>
+      <Container fluid>
         <Form
           noValidate
           validated={this.state.validated}
           onSubmit={e => this.handleOnSubmit(e)}
         >
           <Row className="justify-content-center">
-            <Col xs={12} sm={10} md={8} lg={6}>
+            <Col xs={12} sm={10} md={8} lg={6} xl={4}>
             <Form.Group controlId="formUsername">
               <Form.Label>Nombre de usuario*</Form.Label>
               <Form.Control
@@ -75,7 +96,7 @@ class Register extends Component {
             </Col>
           </Row>
           <Row className="justify-content-center">
-            <Col xs={12} sm={10} md={8} lg={6}>
+            <Col xs={12} sm={10} md={8} lg={6} xl={4}>
             <Form.Group controlId="formEmail">
               <Form.Label>Email</Form.Label>
               <Form.Control
@@ -91,7 +112,7 @@ class Register extends Component {
             </Col>
           </Row>
           <Row className="justify-content-center">
-            <Col xs={12} sm={10} md={8} lg={6}>
+            <Col xs={12} sm={10} md={8} lg={6} xl={4}>
               <Form.Group controlId="formPassword">
                 <Form.Label>Contraseña*</Form.Label>
                 <Form.Control
@@ -109,7 +130,7 @@ class Register extends Component {
             </Col>
           </Row>
           <Row className="justify-content-center">
-            <Col xs={12} sm={10} md={8} lg={6}>
+            <Col xs={12} sm={10} md={8} lg={6} xl={4}>
               <Form.Group controlId="formPassword2">
                 <Form.Label>Repite la contraseña*</Form.Label>
                 <Form.Control
@@ -127,7 +148,7 @@ class Register extends Component {
             </Col>
           </Row>
           <Row className="justify-content-center">
-            <Col xs={12} sm={10} md={8} lg={6}>
+            <Col xs={12} sm={10} md={8} lg={6} xl={4}>
               <Form.Group controlId="formRemember">
                 <Form.Check
                   custom
@@ -141,10 +162,8 @@ class Register extends Component {
             </Col>
           </Row>
           <Row className="justify-content-center mt-2">
-            <Col xs={12} sm={10} md={8} lg={6}className="d-flex justify-content-between">
-              <Button variant="primary" type="submit">
-                Registrarse
-              </Button>
+            <Col xs={12} sm={10} md={8} lg={6} xl={4}className="d-flex justify-content-between">
+            {this.props.isLoading ? loadingButton : registerButton}
               <span>¿Ya tienes cuenta?<Link to="/register">Inicia sesión</Link></span>
             </Col>
           </Row>
@@ -154,4 +173,8 @@ class Register extends Component {
   }
 }
 
-export default connect(null, { register })(Register)
+const mapStateToProps = state => ({
+  isLoading: state.authReducer.isLoading,
+})
+
+export default connect(mapStateToProps, { register })(Register)

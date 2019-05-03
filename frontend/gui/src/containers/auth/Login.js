@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Form, Button, Row, Col, Container } from 'react-bootstrap';
+import { Form, Button, Spinner, Row, Col, Container } from 'react-bootstrap';
 
 import { login } from '../../store/actions/auth'
 
@@ -19,10 +19,11 @@ class Login extends Component {
   }
   static propTypes = {
     login: PropTypes.func.isRequired,
+    isLoading: PropTypes.bool.isRequired,
     username: PropTypes.string,
     password: PropTypes.string,
-    remember: PropTypes.bool.isRequired,
-    validated: PropTypes.bool.isRequired
+    remember: PropTypes.bool,
+    validated: PropTypes.bool
   }
 
   handleOnChange(event) {
@@ -45,15 +46,35 @@ class Login extends Component {
   }
 
   render() {
+    const loginButton = (
+      <Button variant="primary" type="submit">
+        Iniciar Sesión
+      </Button>
+    )
+
+    const loadingButton = (
+      <Button variant="primary" disabled>
+        <Spinner
+          as="span"
+          animation="border"
+          size="sm"
+          role="status"
+          aria-hidden="true"
+        />
+        <span className="ml-2">Cargando...</span>
+        <span className="sr-only">Cargando...</span>
+      </Button>
+    )
+
     return (
-      <Container>
+      <Container fluid>
         <Form
           noValidate
           validated={this.state.validated}
           onSubmit={e => this.handleOnSubmit(e)}
         >
           <Row className="justify-content-center">
-            <Col xs={12} sm={10} md={8} lg={6}>
+            <Col xs={12} sm={10} md={8} lg={6} xl={4}>
             <Form.Group controlId="formUsername">
               <Form.Label>Usuario</Form.Label>
               <Form.Control
@@ -71,7 +92,7 @@ class Login extends Component {
           </Row>
 
           <Row className="justify-content-center">
-            <Col xs={12} sm={10} md={8} lg={6}>
+            <Col xs={12} sm={10} md={8} lg={6} xl={4}>
               <Form.Group controlId="formPassword">
                 <Form.Label>Contraseña</Form.Label>
                 <Form.Control
@@ -89,7 +110,7 @@ class Login extends Component {
             </Col>
           </Row>
           <Row className="justify-content-center">
-            <Col xs={12} sm={10} md={8} lg={6}>
+            <Col xs={12} sm={10} md={8} lg={6} xl={4}>
               <Form.Group controlId="formRemember">
                 <Form.Check
                   custom
@@ -103,10 +124,8 @@ class Login extends Component {
             </Col>
           </Row>
           <Row className="justify-content-center mt-2">
-            <Col xs={12} sm={10} md={8} lg={6}className="d-flex justify-content-between">
-              <Button variant="primary" type="submit">
-                Iniciar Sesión
-              </Button>
+            <Col xs={12} sm={10} md={8} lg={6} xl={4}className="d-flex justify-content-between">
+              {this.props.isLoading ? loadingButton : loginButton}
               <span>¿Aún no tienes cuenta?<Link to="/register">Regístrate</Link></span>
             </Col>
           </Row>
@@ -116,4 +135,9 @@ class Login extends Component {
   }
 }
 
-export default connect(null, { login })(Login)
+const mapStateToProps = state => ({
+  isLoading: state.authReducer.isLoading,
+  errorMsg: state.errorReducer.msg
+})
+
+export default connect(mapStateToProps, { login })(Login)

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import {
+  USER_LOADING,
   USER_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
@@ -9,37 +10,42 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL
 } from '../actionTypes';
-import { returnErrors } from './errors';
+import { returnErrors, clearErrors } from './errors';
 
 export const loadUser = () => (dispatch, getState) => {
+  dispatch({type: USER_LOADING});
+
   const config = tokenConfig(getState);
 
   axios.get('http://127.0.0.1:8000/api/auth/user', config)
     .then(res => {
+      dispatch(clearErrors());
       dispatch({
         type: USER_LOADED,
         payload: res.data
       })
     }).catch(err => {
-      console.log(err);
       dispatch({
         type: AUTH_ERROR
       })
-      dispatch(returnErrors(err));
+      dispatch(returnErrors(err, "auth"));
     })
 }
 
 export const login = (username, password, remember) => (dispatch) => {
+  dispatch({type: USER_LOADING});
+
   const config = {
     headers: {
       'Content-Type': 'application/json'
     }
   }
 
-  const body = JSON.stringify({ username, password })
+  const body = JSON.stringify({ username, password });
 
   axios.post('http://127.0.0.1:8000/api/auth/login', body, config)
     .then(res => {
+      dispatch(clearErrors());
       let payload = {
         ...res.data,
         remember: remember
@@ -49,15 +55,16 @@ export const login = (username, password, remember) => (dispatch) => {
         payload: payload
       })
     }).catch(err => {
-      console.log(err);
       dispatch({
         type: LOGIN_FAIL
       })
-      dispatch(returnErrors(err));
+      dispatch(returnErrors(err, "auth"));
     })
 }
 
 export const register = (username, email,  password, remember) => (dispatch) => {
+  dispatch({type: USER_LOADING});
+
   const config = {
     headers: {
       'Content-Type': 'application/json'
@@ -69,6 +76,7 @@ export const register = (username, email,  password, remember) => (dispatch) => 
 
   axios.post('http://127.0.0.1:8000/api/auth/register', body, config)
     .then(res => {
+      dispatch(clearErrors());
       let payload = {
         ...res.data,
         remember: remember
@@ -79,7 +87,6 @@ export const register = (username, email,  password, remember) => (dispatch) => 
         payload: payload
       })
     }).catch(err => {
-      console.log(err);
       dispatch({
         type: REGISTER_FAIL
       })
@@ -88,16 +95,18 @@ export const register = (username, email,  password, remember) => (dispatch) => 
 }
 
 export const logout = () => (dispatch, getState) => {
+  dispatch({type: USER_LOADING});
+
   const config = tokenConfig(getState);
 
   axios.post('http://127.0.0.1:8000/api/auth/logout',null, config)
     .then(res => {
+      dispatch(clearErrors());
       dispatch({
         type: LOGOUT_SUCCESS
       })
     }).catch(err => {
-      console.log(err);
-      dispatch(returnErrors(err));
+      dispatch(returnErrors(err, "auth"));
     })
 }
 
