@@ -6,7 +6,7 @@ export const returnErrors = (err, type) => {
         msg = err.response.data;
         status = err.response.status;
     }catch{
-        msg = {'server': ['Error inesperado']}
+        msg = {'server': ['¡Vaya! Ha ocurrido un error inesperado.']}
         status = 503
     }
     return {

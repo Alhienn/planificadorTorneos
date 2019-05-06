@@ -7,7 +7,7 @@ import {clearErrors } from '../../store/actions/errors'
 
 //componente para eliminar errores
 
-class AppContainer extends Component {
+class ErrorCleaner extends Component {
   static propTypes = {
     clearErrors : PropTypes.func.isRequired
   }
@@ -25,4 +25,4 @@ class AppContainer extends Component {
   }
 }
 
-export default withRouter(connect(null, { clearErrors })(AppContainer))
+export default withRouter(connect(null, { clearErrors })(ErrorCleaner))

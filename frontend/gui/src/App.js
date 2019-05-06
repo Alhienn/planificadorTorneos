@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 
 import PublicRoute from './containers/routes/PublicRoute';
 import PrivateRoute from './containers/routes/PrivateRoute';
-import ErrorCleaner from './containers/routes/ErrorCleaner';
+import ErrorCleaner from './containers/common/ErrorCleaner';
 import Header from './containers/layout/Header';
 import Login from './containers/auth/Login';
 import Register from './containers/auth/Register';
@@ -17,7 +17,7 @@ import { loadUser } from './store/actions/auth';
 class App extends Component {
 
   componentDidMount() {
-   store.dispatch(loadUser());
+    localStorage.getItem('token') && store.dispatch(loadUser());
   };
 
   render(){

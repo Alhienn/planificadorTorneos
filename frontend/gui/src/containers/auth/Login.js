@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Form, Button, Row, Col, Container } from 'react-bootstrap';
+import { Form, Button, Row, Col, Container, Alert } from 'react-bootstrap';
 
 import LoadingButton from '../../components/LoadingButton';
 
@@ -19,9 +19,11 @@ class Login extends Component {
       validated: false
     }
   }
+
   static propTypes = {
     login: PropTypes.func.isRequired,
     isLoading: PropTypes.bool.isRequired,
+    errorMsg: PropTypes.object,
     username: PropTypes.string,
     password: PropTypes.string,
     remember: PropTypes.bool,
@@ -56,6 +58,13 @@ class Login extends Component {
 
     return (
       <Container fluid>
+        {this.props.errorMsg && (
+          <Row className="justify-content-center">
+            <Col xs={12} sm={10} md={8} lg={6} xl={4}>
+              <Alert variant="warning">{Object.values(this.props.errorMsg)}</Alert>
+            </Col>
+          </Row>
+        )}
         <Form
           noValidate
           validated={this.state.validated}
@@ -113,7 +122,7 @@ class Login extends Component {
           </Row>
           <Row className="justify-content-center mt-2">
             <Col xs={12} sm={10} md={8} lg={6} xl={4}className="d-flex justify-content-between">
-              {this.props.isLoading ? LoadingButton : loginButton}
+              {this.props.isLoading ? (<LoadingButton />) : loginButton}
               <span>¿Aún no tienes cuenta? <Link to="/register">Regístrate</Link></span>
             </Col>
           </Row>

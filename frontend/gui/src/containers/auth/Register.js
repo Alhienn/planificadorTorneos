@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Form, Button, Row, Col, Container } from 'react-bootstrap';
+import { Form, Button, Row, Col, Container, Alert } from 'react-bootstrap';
 
 import LoadingButton from '../../components/LoadingButton';
 
@@ -24,6 +24,7 @@ class Register extends Component {
   static propTypes = {
     register: PropTypes.func.isRequired,
     isLoading: PropTypes.bool.isRequired,
+    errorMsg: PropTypes.object,
     username: PropTypes.string,
     email: PropTypes.string,
     password: PropTypes.string,
@@ -61,6 +62,13 @@ class Register extends Component {
 
     return (
       <Container fluid>
+        {this.props.errorMsg && (
+          <Row className="justify-content-center">
+            <Col xs={12} sm={10} md={8} lg={6} xl={4}>
+              <Alert variant="warning">{Object.values(this.props.errorMsg)}</Alert>
+            </Col>
+          </Row>
+        )}
         <Form
           noValidate
           validated={this.state.validated}
@@ -151,7 +159,7 @@ class Register extends Component {
           </Row>
           <Row className="justify-content-center mt-2">
             <Col xs={12} sm={10} md={8} lg={6} xl={4}className="d-flex justify-content-between">
-            {this.props.isLoading ? LoadingButton : registerButton}
+            {this.props.isLoading ? (<LoadingButton />) : registerButton}
               <span>¿Ya tienes cuenta? <Link to="/register">Inicia sesión</Link></span>
             </Col>
           </Row>
@@ -163,6 +171,7 @@ class Register extends Component {
 
 const mapStateToProps = state => ({
   isLoading: state.authReducer.isLoading,
+  errorMsg: state.errorReducer.msg
 })
 
 export default connect(mapStateToProps, { register })(Register)
