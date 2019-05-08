@@ -23,11 +23,7 @@ class Login extends Component {
   static propTypes = {
     login: PropTypes.func.isRequired,
     isLoading: PropTypes.bool.isRequired,
-    errorMsg: PropTypes.object,
-    username: PropTypes.string,
-    password: PropTypes.string,
-    remember: PropTypes.bool,
-    validated: PropTypes.bool
+    errorMsg: PropTypes.object
   }
 
   handleOnChange(event) {

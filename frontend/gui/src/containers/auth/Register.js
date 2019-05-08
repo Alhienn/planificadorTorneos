@@ -25,12 +25,6 @@ class Register extends Component {
     register: PropTypes.func.isRequired,
     isLoading: PropTypes.bool.isRequired,
     errorMsg: PropTypes.object,
-    username: PropTypes.string,
-    email: PropTypes.string,
-    password: PropTypes.string,
-    password2: PropTypes.string,
-    remember: PropTypes.bool,
-    validated: PropTypes.bool
   }
 
   handleOnChange(event) {
