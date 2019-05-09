@@ -29,7 +29,7 @@ class LoginView(generics.GenericAPIView):
         "token": token
     })
 
-class UserView(generics.RetrieveAPIView):
+class UserView(generics.RetrieveUpdateAPIView):
   permission_classes = [
     permissions.IsAuthenticated,
   ]

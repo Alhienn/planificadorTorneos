@@ -41,7 +41,6 @@ class Register extends Component {
     if (form.checkValidity() === false) {
       event.stopPropagation();
     }else{
-      console.log(this.state.username, this.state.email, this.state.password, this.state.remember)
       this.props.register(this.state.username,this.state.email, this.state.password, this.state.remember)
     }
     this.setState({ validated: true });

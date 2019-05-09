@@ -3,6 +3,8 @@ import axios from 'axios';
 import {
   USER_LOADING,
   USER_LOADED,
+  USER_UPDATE,
+  UPDATE_FAIL,
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -90,6 +92,31 @@ export const register = (username, email,  password, remember) => (dispatch) => 
         type: REGISTER_FAIL
       })
       dispatch(returnErrors(err));
+    })
+}
+
+export const updateUser = (username, email) => (dispatch, getState) => {
+  dispatch({type: USER_LOADING});
+
+  const config = tokenConfig(getState);
+
+  const body = JSON.stringify({ username, email });
+
+  axios.put('http://127.0.0.1:8000/api/auth/user', body, config)
+    .then(res => {
+      dispatch(clearErrors());
+      let payload = {
+        ...res.data,
+      }
+      dispatch({
+        type: USER_UPDATE,
+        payload: payload
+      })
+    }).catch(err => {
+      dispatch({
+        type: UPDATE_FAIL
+      })
+      dispatch(returnErrors(err, "auth"));
     })
 }
 

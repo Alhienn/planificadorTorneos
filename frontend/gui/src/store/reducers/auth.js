@@ -1,6 +1,8 @@
 import {
   USER_LOADING,
   USER_LOADED,
+  USER_UPDATE,
+  UPDATE_FAIL,
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -25,6 +27,7 @@ export default function(state = initialState, action) {
         isLoading: true
       }
     case USER_LOADED:
+    case USER_UPDATE:
       return {
         ...state,
         isAuthenticated: true,
@@ -50,6 +53,11 @@ export default function(state = initialState, action) {
         token: null,
         user: null,
         isAuthenticated: false,
+        isLoading: false
+      }
+    case UPDATE_FAIL:
+      return{
+        ...state,
         isLoading: false
       }
     default: 

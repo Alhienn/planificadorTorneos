@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import  Form from 'react-bootstrap/FormControl'
+import Form from 'react-bootstrap/FormControl'
 
 export default class EditField extends Component {
   constructor(props){
@@ -10,12 +10,17 @@ export default class EditField extends Component {
 
     this.state = {
       editable: false,
-      iconVisible: false,
+      iconEditVisible: false,
+      iconCkeckVisible: false,
       value: this.props.value 
     }
   }
   componentDidUpdate(){
     this.formRef.current && this.formRef.current.focus();
+  }
+
+  componentWillReceiveProps(){
+    this.setState({iconCkeckVisible: false})
   }
 
   static propTypes = {
@@ -25,11 +30,11 @@ export default class EditField extends Component {
   }
 
   handleOnMouseOver = () =>{
-    this.setState({iconVisible:true})
+    this.setState({iconEditVisible:true})
   }
 
   handleOnMouseLeave = () => {
-    this.setState({iconVisible:false})
+    this.setState({iconEditVisible:false})
   }
 
   handleOnClick(event){
@@ -38,15 +43,24 @@ export default class EditField extends Component {
   }
 
   handleOnBlur = () => {
-    this.setState({editable:false, iconVisible:false})
+    this.formRef.current.checkValidity() && this.setState({
+      editable: false,
+      iconEditVisible: false,
+      iconCkeckVisible: true
+    })
   }
 
   render() {
     const text = (
-      <div className="m-3" onMouseOver={this.handleOnMouseOver} onMouseLeave={this.handleOnMouseLeave}>{this.props.value}{this.state.iconVisible && (
-        // eslint-disable-next-line jsx-a11y/anchor-is-valid
-        <a href="" role="button" className="ml-1 text-secondary" onClick={e => this.handleOnClick(e)}><i className="material-icons md-18">edit</i></a>
-      )}</div>
+      <div className="my-2 ml-3 d-flex" onMouseOver={this.handleOnMouseOver} onMouseLeave={this.handleOnMouseLeave}>
+        <div>{this.props.value}</div>
+        <div>{(this.state.iconEditVisible || !this.props.value )&&(
+          <a href="" role="button" className="ml-1 text-secondary" onClick={e => this.handleOnClick(e)}><i className="material-icons md-18">edit</i></a>
+        )}</div>
+        {(this.state.iconCkeckVisible && this.props.value) && (
+          <div className="ml-auto"><i className="material-icons md-18 font-weight-bold text-success">check</i></div>
+        )}
+      </div>
     );
 
     const edit = (

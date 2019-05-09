@@ -8,8 +8,8 @@ import ErrorCleaner from './containers/common/ErrorCleaner';
 import Header from './containers/layout/Header';
 import Login from './containers/auth/Login';
 import Register from './containers/auth/Register';
-import Home from './components/Home';
 import User from './containers/layout/User';
+import Home from './components/Home';
 
 import store from './store';
 import { loadUser } from './store/actions/auth';

@@ -4,7 +4,7 @@ import { Button, Spinner } from 'react-bootstrap';
 export default class LoadingButton extends Component {
   render() {
     return (
-      <Button variant="primary" disabled>
+      <Button {...this.props} variant="primary" disabled>
         <Spinner
           as="span"
           animation="border"
