@@ -4,6 +4,7 @@ import {
   USER_LOADING,
   USER_LOADED,
   USER_UPDATE,
+  PASSWORD_UPDATE,
   UPDATE_FAIL,
   AUTH_ERROR,
   LOGIN_SUCCESS,
@@ -111,6 +112,27 @@ export const updateUser = (username, email) => (dispatch, getState) => {
       dispatch({
         type: USER_UPDATE,
         payload: payload
+      })
+    }).catch(err => {
+      dispatch({
+        type: UPDATE_FAIL
+      })
+      dispatch(returnErrors(err, "auth"));
+    })
+}
+
+export const updatePassword = (old_password, new_password) => (dispatch, getState) => {
+  dispatch({type: USER_LOADING});
+
+  const config = tokenConfig(getState);
+
+  const body = JSON.stringify({ old_password, new_password });
+
+  axios.put('http://127.0.0.1:8000/api/auth/changePassword', body, config)
+    .then(res => {
+      dispatch(clearErrors());
+      dispatch({
+        type: PASSWORD_UPDATE
       })
     }).catch(err => {
       dispatch({

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
+import { LinkContainer } from "react-router-bootstrap";
 
 import EditField from '../../components/EditField';
 import LoadingButton from '../../components/LoadingButton';
@@ -60,54 +61,56 @@ class User extends Component {
     )
 
     return (
-      <Container>
+      <Container fluid>
         {this.props.errorMsg && (
-          <Row>
-            <Col xs={9} sm={8} md={7} lg={6} xl={4}>
+          <Row className="justify-content-center">
+            <Col xs={12} sm={10} md={8} lg={6} xl={4}>
               <Alert variant="warning">{Object.values(this.props.errorMsg)}</Alert>
             </Col>
           </Row>
         )}
-        <Row><h3>Tus datos:</h3></Row>
+        <Row className="justify-content-center">
+          <Col xs={12} sm={10} md={8} lg={6} xl={4} ><h3>Tus datos:</h3></Col>
+        </Row>
         <Form
           validated
           onSubmit={e => this.handleOnSubmit(e)}
         >
-          <Row>
-            <Col sm={4} md={3} xl={2} xs={12} className="mt-2 font-weight-bold">Nombre de usuario:</Col>
-            <Col sm={6} md={4}>
+          <Form.Group as={Row} controlId="formUsername" className="justify-content-sm-center">
+            <Form.Label column xs={12} sm={2} md={1}className="font-weight-bold">Usuario:</Form.Label>
+            <Col sm={8} md={7} lg={5} xl={3}>
               <EditField
-              name="username"
-              value={this.state.username}
-              type="text"
-              required
-              onChange={e => this.handleOnChange(e)}
-            />
-            <Form.Control.Feedback type="invalid">
-              Introduce tu nombre de usuario.
-            </Form.Control.Feedback>
+                name="username"
+                value={this.state.username}
+                type="text"
+                required
+                onChange={e => this.handleOnChange(e)}
+              />
+              <Form.Control.Feedback type="invalid">
+                Introduce tu nombre de usuario.
+              </Form.Control.Feedback>
             </Col>
-          </Row>
-          <Row>
-            <Col sm={4} md={3} xl={2} xs={12} className="mt-2 font-weight-bold">Email:</Col>
-            <Col sm={6} md={4}>
+          </Form.Group>
+          <Form.Group  as={Row} controlId="formEmail" className="justify-content-center">
+            <Form.Label column xs={12} sm={2} md={1} className="font-weight-bold">Email:</Form.Label>
+            <Col sm={8} md={7} lg={5} xl={3}>
               <EditField
-              name="email"
-              value={this.state.email}
-              type="email"
-              onChange={e => this.handleOnChange(e)}
-            />
-            <Form.Control.Feedback type="invalid">
-              Introduce un email válido.
-            </Form.Control.Feedback>
+                name="email"
+                value={this.state.email}
+                type="email"
+                onChange={e => this.handleOnChange(e)}
+              />
+              <Form.Control.Feedback type="invalid">
+                Introduce un email válido.
+              </Form.Control.Feedback>
             </Col>
-          </Row>
-          <Row className="mt-4" >
-            <Col xs={5} md={4} lg={3}>
-              <Button size="sm" variant="primary">Cambiar Contraseña</Button>
-            </Col>
-            <Col xs={5} md={4} lg={3}>
+          </ Form.Group>
+          <Row className="mt-4 justify-content-center">
+            <Col xs={12} sm={10} md={8} lg={6} xl={4}>
               {this.props.isLoading ? (<LoadingButton size="sm"/>) : updateButton}
+              <LinkContainer to="/changePassword">
+                <Button className="ml-3" size="sm" variant="primary">Cambiar Contraseña</Button>
+              </LinkContainer>
             </Col>
           </Row>
         </Form>

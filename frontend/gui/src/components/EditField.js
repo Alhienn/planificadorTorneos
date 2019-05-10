@@ -54,11 +54,11 @@ export default class EditField extends Component {
     const text = (
       <div className="my-2 ml-3 d-flex" onMouseOver={this.handleOnMouseOver} onMouseLeave={this.handleOnMouseLeave}>
         <div>{this.props.value}</div>
-        <div>{(this.state.iconEditVisible || !this.props.value )&&(
-          <a href="" role="button" className="ml-1 text-secondary" onClick={e => this.handleOnClick(e)}><i className="material-icons md-18">edit</i></a>
-        )}</div>
         {(this.state.iconCkeckVisible && this.props.value) && (
-          <div className="ml-auto"><i className="material-icons md-18 font-weight-bold text-success">check</i></div>
+          <div><i className="material-icons md-18 font-weight-bold text-success">check</i></div>
+        )}
+        {(this.state.iconEditVisible || !this.props.value )&&(
+          <div><a href="edit" role="button" className="ml-1 text-secondary" onClick={e => this.handleOnClick(e)}><i className="material-icons md-18">edit</i></a></div>
         )}
       </div>
     );

@@ -10,6 +10,7 @@ import Login from './containers/auth/Login';
 import Register from './containers/auth/Register';
 import User from './containers/layout/User';
 import Home from './components/Home';
+import ChangePassword from './containers/auth/ChangePassword'
 
 import store from './store';
 import { loadUser } from './store/actions/auth';
@@ -31,6 +32,7 @@ class App extends Component {
               <PublicRoute exact path="/login" component={Login} />
               <PublicRoute exact path="/register" component={Register} />
               <PrivateRoute exact path="/user" component={User}/>
+              <PrivateRoute exact path="/changePassword" component={ChangePassword}/>
             </Switch>
             </ErrorCleaner>
         </Router>

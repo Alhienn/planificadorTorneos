@@ -21,7 +21,11 @@ class Header extends Component {
           alignRight
           title={user && user.username} id="nav-dropdown"
         >
-          <NavDropdown.Item onClick={this.props.logout} >Cerrar Sesión</NavDropdown.Item>
+        <LinkContainer to="/user">
+          <NavDropdown.Item>Tus datos</NavDropdown.Item>
+        </LinkContainer>
+          <NavDropdown.Divider />
+          <NavDropdown.Item onClick={this.props.logout}>Cerrar Sesión</NavDropdown.Item>
         </NavDropdown>
       </Nav>
     );

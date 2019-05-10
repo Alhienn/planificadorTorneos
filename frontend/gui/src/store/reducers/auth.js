@@ -2,6 +2,7 @@ import {
   USER_LOADING,
   USER_LOADED,
   USER_UPDATE,
+  PASSWORD_UPDATE,
   UPDATE_FAIL,
   AUTH_ERROR,
   LOGIN_SUCCESS,
@@ -56,6 +57,7 @@ export default function(state = initialState, action) {
         isLoading: false
       }
     case UPDATE_FAIL:
+    case PASSWORD_UPDATE:
       return{
         ...state,
         isLoading: false
