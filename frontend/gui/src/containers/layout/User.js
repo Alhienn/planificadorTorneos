@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button} from 'react-bootstrap';
 import { LinkContainer } from "react-router-bootstrap";
 
 import EditField from '../../components/EditField';
@@ -20,9 +20,9 @@ class User extends Component {
 
   static propTypes = {
     user: PropTypes.object.isRequired,
-    isLoading: PropTypes.bool.isRequired,
     updateUser: PropTypes.func.isRequired,
-    errorMsg: PropTypes.object
+    errorMsg: PropTypes.object,
+    isLoading: PropTypes.bool.isRequired
   }
 
   
@@ -62,13 +62,6 @@ class User extends Component {
 
     return (
       <Container fluid>
-        {this.props.errorMsg && (
-          <Row className="justify-content-center">
-            <Col xs={12} sm={10} md={8} lg={6} xl={4}>
-              <Alert variant="warning">{Object.values(this.props.errorMsg)}</Alert>
-            </Col>
-          </Row>
-        )}
         <Row className="justify-content-center">
           <Col xs={12} sm={10} md={8} lg={6} xl={4} ><h3>Tus datos:</h3></Col>
         </Row>
@@ -120,9 +113,9 @@ class User extends Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.authReducer.user,
-  isLoading: state.authReducer.isLoading,
-  errorMsg: state.errorReducer.msg
+  user: state.auth.user,
+  errorMsg: state.errors.msg,
+  isLoading: state.auth.isLoading
 })
 
 export default connect(mapStateToProps, { updateUser })(User);

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Form, Button, Row, Col, Container, Alert } from 'react-bootstrap'
+import { Form, Button, Row, Col, Container } from 'react-bootstrap'
 
 import LoadingButton from '../../components/LoadingButton'
 import { updatePassword } from '../../store/actions/auth'
@@ -20,8 +20,15 @@ class ChangePassword extends Component {
 
   static propTypes = {
     isLoading: PropTypes.bool.isRequired,
-    errorMsg: PropTypes.object,
     updatePassword: PropTypes.func.isRequired,
+  }
+
+  componentWillUpdate(prevProps) {
+    if (this.props.isLoading !== prevProps.isLoading){
+      this.setState({
+        validated: false
+      })
+    }
   }
 
   handleOnChange(event) {
@@ -52,15 +59,6 @@ class ChangePassword extends Component {
 
     return (
       <Container fluid>
-        {this.props.errorMsg && (
-          <Row className="justify-content-center">
-            <Col xs={12} sm={10} md={8} lg={6} xl={4}>
-              <Alert variant="warning">{Object.values(this.props.errorMsg).map(error => (
-                <div>{error}</div>
-              ))}</Alert>
-            </Col>
-          </Row>
-        )}
         <Form
           noValidate
           validated={this.state.validated}
@@ -132,9 +130,7 @@ class ChangePassword extends Component {
 }
 
 const mapStateToProps = state => ({
-  isLoading: state.authReducer.isLoading,
-  errorMsg: state.errorReducer.msg
+  isLoading: state.auth.isLoading
 })
-
 
 export default connect(mapStateToProps, { updatePassword })(ChangePassword)

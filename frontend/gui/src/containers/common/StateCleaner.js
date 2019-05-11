@@ -3,18 +3,21 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import {clearErrors } from '../../store/actions/errors'
+import { clearErrors } from '../../store/actions/errors'
+import { clearSuccess } from '../../store/actions/success'
 
 //componente para eliminar errores
 
-class ErrorCleaner extends Component {
+class StateCleaner extends Component {
   static propTypes = {
-    clearErrors : PropTypes.func.isRequired
+    clearErrors : PropTypes.func.isRequired,
+    clearSuccess : PropTypes.func.isRequired
   }
 
   componentWillMount() {
     this.unlisten = this.props.history.listen(() => {
       this.props.clearErrors();
+      this.props.clearSuccess();
     });
   }
 
@@ -25,4 +28,4 @@ class ErrorCleaner extends Component {
   }
 }
 
-export default withRouter(connect(null, { clearErrors })(ErrorCleaner))
+export default withRouter(connect(null, { clearErrors, clearSuccess })(StateCleaner))

@@ -14,6 +14,7 @@ import {
   REGISTER_FAIL
 } from '../actionTypes';
 import { returnErrors, clearErrors } from './errors';
+import { returnSuccess } from './success';
 
 export const loadUser = () => (dispatch, getState) => {
   dispatch({type: USER_LOADING});
@@ -113,6 +114,7 @@ export const updateUser = (username, email) => (dispatch, getState) => {
         type: USER_UPDATE,
         payload: payload
       })
+      dispatch(returnSuccess("Se han actualizado tus datos correctamente","auth"));
     }).catch(err => {
       dispatch({
         type: UPDATE_FAIL
@@ -134,6 +136,7 @@ export const updatePassword = (old_password, new_password) => (dispatch, getStat
       dispatch({
         type: PASSWORD_UPDATE
       })
+      dispatch(returnSuccess("Se ha actualizado tu contraseña correctamente","auth"));
     }).catch(err => {
       dispatch({
         type: UPDATE_FAIL
@@ -159,7 +162,7 @@ export const logout = () => (dispatch, getState) => {
 }
 
 export function tokenConfig(getState) {
-  const token = getState().authReducer.token;
+  const token = getState().auth.token;
   const config = {
     headers: {
       'Content-Type': 'application/json'

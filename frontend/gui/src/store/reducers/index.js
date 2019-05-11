@@ -3,8 +3,10 @@ import { combineReducers } from 'redux';
 
 import auth from './auth';
 import errors from './errors';
+import success from './success';
 
 export default combineReducers({
-  authReducer: auth,
-  errorReducer: errors,
+  auth,
+  errors,
+  success
 });

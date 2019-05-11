@@ -1,6 +1,8 @@
 import { GET_ERRORS, CLEAR_ERRORS } from '../actionTypes';
+import { clearSuccess } from './success';
 
-export const returnErrors = (err, type) => {
+export const returnErrors = (err, type) => (dispatch) => {
+    dispatch(clearSuccess());
     let msg, status = null;
     try{
         msg = err.response.data;
@@ -9,14 +11,14 @@ export const returnErrors = (err, type) => {
         msg = {'server': ['¡Vaya! Ha ocurrido un error inesperado.']}
         status = 503
     }
-    return {
+    dispatch({
         type: GET_ERRORS,
         payload: { msg, status, type}
-    }
+    })
 }
 
-export const clearErrors = () =>{
-    return{
+export const clearErrors = () => (dispatch) =>{
+    dispatch({
         type: CLEAR_ERRORS
-    }
+    })
 }
