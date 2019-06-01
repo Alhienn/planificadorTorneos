@@ -14,7 +14,7 @@ const  PrivateRoute = ({ component: Component , auth, ...rest}) => {
       {...rest}
       render={props => {
         if(auth.isAuthenticated) {
-          return <Redirect to="/user" />
+          return <Redirect to="/tournaments-user" />
         } else {
           return <Component {...props} />;
         }

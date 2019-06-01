@@ -21,9 +21,16 @@ class Header extends Component {
           alignRight
           title={user && user.username} id="nav-dropdown"
         >
-        <LinkContainer to="/user">
-          <NavDropdown.Item>Tus datos</NavDropdown.Item>
-        </LinkContainer>
+          <LinkContainer to="/create-tournament">
+            <NavDropdown.Item>Crear Torneo</NavDropdown.Item>
+          </LinkContainer>
+          <NavDropdown.Divider />
+          <LinkContainer to="/user">
+            <NavDropdown.Item>Tus datos</NavDropdown.Item>
+          </LinkContainer>
+          <LinkContainer to="/tournaments-user">
+            <NavDropdown.Item>Tus torneos</NavDropdown.Item>
+          </LinkContainer>
           <NavDropdown.Divider />
           <NavDropdown.Item onClick={this.props.logout}>Cerrar Sesión</NavDropdown.Item>
         </NavDropdown>
@@ -42,7 +49,7 @@ class Header extends Component {
     );
 
     return (
-      <Navbar bg="light" expand="sm" className="mb-4">
+      <Navbar bg="primary" variant="dark" expand="sm" className="mb-4">
         <LinkContainer to="/">
           <Navbar.Brand>Planificador Torneos</Navbar.Brand>
         </LinkContainer>

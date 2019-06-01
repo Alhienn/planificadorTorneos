@@ -9,16 +9,17 @@ import { clearSuccess } from '../../store/actions/success'
 //componente para eliminar errores
 
 class StateCleaner extends Component {
-  static propTypes = {
-    clearErrors : PropTypes.func.isRequired,
-    clearSuccess : PropTypes.func.isRequired
-  }
+  constructor(props){
+    super(props)
 
-  componentWillMount() {
     this.unlisten = this.props.history.listen(() => {
       this.props.clearErrors();
       this.props.clearSuccess();
     });
+  }
+  static propTypes = {
+    clearErrors : PropTypes.func.isRequired,
+    clearSuccess : PropTypes.func.isRequired
   }
 
   render() {

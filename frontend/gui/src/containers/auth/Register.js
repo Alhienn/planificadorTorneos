@@ -25,7 +25,7 @@ class Register extends Component {
     isLoading: PropTypes.bool.isRequired
   }
 
-  componentWillUpdate(prevProps) {
+  componentDidUpdate(prevProps) {
     if (this.props.isLoading !== prevProps.isLoading){
       this.setState({
         validated: false
@@ -69,7 +69,7 @@ class Register extends Component {
           <Row className="justify-content-center">
             <Col xs={12} sm={10} md={8} lg={6} xl={4}>
             <Form.Group controlId="formUsername">
-              <Form.Label>Nombre de usuario*</Form.Label>
+              <Form.Label>Nombre de usuario* :</Form.Label>
               <Form.Control
                 name="username"
                 type="text"
@@ -86,7 +86,7 @@ class Register extends Component {
           <Row className="justify-content-center">
             <Col xs={12} sm={10} md={8} lg={6} xl={4}>
             <Form.Group controlId="formEmail">
-              <Form.Label>Email</Form.Label>
+              <Form.Label>Email:</Form.Label>
               <Form.Control
                 name="email"
                 type="email"
@@ -102,7 +102,7 @@ class Register extends Component {
           <Row className="justify-content-center">
             <Col xs={12} sm={10} md={8} lg={6} xl={4}>
               <Form.Group controlId="formPassword">
-                <Form.Label>Contraseña*</Form.Label>
+                <Form.Label>Contraseña* :</Form.Label>
                 <Form.Control
                   name="password"
                   type="password"
@@ -120,7 +120,7 @@ class Register extends Component {
           <Row className="justify-content-center">
             <Col xs={12} sm={10} md={8} lg={6} xl={4}>
               <Form.Group controlId="formPassword2">
-                <Form.Label>Repite la contraseña*</Form.Label>
+                <Form.Label>Repite la contraseña* :</Form.Label>
                 <Form.Control
                   name="password2"
                   type="password"
@@ -152,7 +152,7 @@ class Register extends Component {
           <Row className="justify-content-center mt-2">
             <Col xs={12} sm={10} md={8} lg={6} xl={4}className="d-flex justify-content-between">
             {this.props.isLoading ? (<LoadingButton />) : registerButton}
-              <span>¿Ya tienes cuenta? <Link to="/register">Inicia sesión</Link></span>
+              <span>¿Ya tienes cuenta? <Link to="/login">Inicia sesión</Link></span>
             </Col>
           </Row>
         </Form>

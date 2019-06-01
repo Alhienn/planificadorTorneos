@@ -23,7 +23,7 @@ class ChangePassword extends Component {
     updatePassword: PropTypes.func.isRequired,
   }
 
-  componentWillUpdate(prevProps) {
+  componentDidUpdate(prevProps) {
     if (this.props.isLoading !== prevProps.isLoading){
       this.setState({
         validated: false

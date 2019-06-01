@@ -15,7 +15,8 @@ export default class EditField extends Component {
       value: this.props.value 
     }
   }
-  componentDidUpdate(){
+
+  componentDidUpdate(prevProps){
     this.formRef.current && this.formRef.current.focus();
   }
 
@@ -24,9 +25,9 @@ export default class EditField extends Component {
   }
 
   static propTypes = {
-    value: PropTypes.string,
+    value: PropTypes.any,
     type: PropTypes.string,
-    onChange: PropTypes.func,
+    onChange: PropTypes.func
   }
 
   handleOnMouseOver = () =>{
@@ -68,7 +69,7 @@ export default class EditField extends Component {
     );
 
     return (
-      this.state.editable ? edit: text
+      this.state.editable ? edit : text
     )
   }
 }

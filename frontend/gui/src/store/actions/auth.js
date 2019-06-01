@@ -16,6 +16,15 @@ import {
 import { returnErrors, clearErrors } from './errors';
 import { returnSuccess } from './success';
 
+export const startLoading = () => (dispatch) => {
+  dispatch({type: USER_LOADING});
+}
+
+export const stopLoading = () => (dispatch) => {
+  dispatch({type: USER_LOADING});
+}
+
+
 export const loadUser = () => (dispatch, getState) => {
   dispatch({type: USER_LOADING});
 

@@ -16,7 +16,7 @@ class WarningAlert extends Component {
           <Row className="justify-content-center">
             <Col xs={12} sm={10} md={8} lg={6} xl={4}>
               <Alert variant="warning">{Object.values(this.props.errorMsg).map(error => (
-                <div>{error}</div>
+                <div key={error}>{error}</div>
               ))}</Alert>
             </Col>
           </Row>

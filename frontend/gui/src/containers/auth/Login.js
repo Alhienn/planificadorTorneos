@@ -24,7 +24,7 @@ class Login extends Component {
     isLoading: PropTypes.bool.isRequired
   }
 
-  componentWillUpdate(prevProps) {
+  componentDidUpdate(prevProps) {
     if (this.props.isLoading !== prevProps.isLoading){
       this.setState({
         validated: false
@@ -68,7 +68,7 @@ class Login extends Component {
           <Row className="justify-content-center">
             <Col xs={12} sm={10} md={8} lg={6} xl={4}>
             <Form.Group controlId="formUsername">
-              <Form.Label>Usuario</Form.Label>
+              <Form.Label>Usuario :</Form.Label>
               <Form.Control
                 name="username"
                 type="text"
@@ -86,7 +86,7 @@ class Login extends Component {
           <Row className="justify-content-center">
             <Col xs={12} sm={10} md={8} lg={6} xl={4}>
               <Form.Group controlId="formPassword">
-                <Form.Label>Contraseña</Form.Label>
+                <Form.Label>Contraseña :</Form.Label>
                 <Form.Control
                   name="password"
                   type="password"
@@ -116,7 +116,7 @@ class Login extends Component {
             </Col>
           </Row>
           <Row className="justify-content-center mt-2">
-            <Col xs={12} sm={10} md={8} lg={6} xl={4}className="d-flex justify-content-between">
+            <Col xs={12} sm={10} md={8} lg={6} xl={4} className="d-flex justify-content-between">
               {this.props.isLoading ? (<LoadingButton />) : loginButton}
               <span>¿Aún no tienes cuenta? <Link to="/register">Regístrate</Link></span>
             </Col>

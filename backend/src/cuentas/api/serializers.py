@@ -29,7 +29,7 @@ class LoginSerializer(serializers.Serializer):
     user = authenticate(**data)
     if user and user.is_active:
       return user
-    raise serializers.ValidationError({"credentials": "Usuario o contraseña incorrectos"})
+    raise serializers.ValidationError({"credentials": "Usuario o contraseña incorrectos."})
 
 class ChangePasswordSerializer(serializers.Serializer):
   new_password = serializers.CharField(required=True)
@@ -38,7 +38,7 @@ class ChangePasswordSerializer(serializers.Serializer):
   def validate_new_password(self, value):
     validate_password(value)
     if self.context['request'].user.check_password(value):
-      raise serializers.ValidationError('No puede ser la contraseña anterior')
+      raise serializers.ValidationError('No puede ser la contraseña anterior.')
     return value
 
   def validate_old_password(self, value):

@@ -11,23 +11,29 @@ import { updateUser } from '../../store/actions/auth';
 class User extends Component {
   constructor(props) {
     super(props);
-
     this.state= {
-      username: this.props.user.username,
-      email: this.props.user.email
+      username: "",
+      email: ""
     }
   }
 
   static propTypes = {
-    user: PropTypes.object.isRequired,
+    user: PropTypes.object,
     updateUser: PropTypes.func.isRequired,
     errorMsg: PropTypes.object,
-    isLoading: PropTypes.bool.isRequired
+    isLoading: PropTypes.bool.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired
   }
 
   
-  componentWillUpdate(prevProps) {
+  componentDidUpdate(prevProps) {
     if (this.props.errorMsg !== prevProps.errorMsg){
+      this.setState({
+        username: this.props.user.username,
+        email: this.props.user.email
+      })
+    }
+    if (this.props.isAuthenticated !== prevProps.isAuthenticated){
       this.setState({
         username: this.props.user.username,
         email: this.props.user.email
@@ -49,7 +55,7 @@ class User extends Component {
     if (form.checkValidity() === false) {
       event.stopPropagation();
     }else{
-      this.props.updateUser(this.state.username,this.state.email)
+      this.props.updateUser(this.state.username, this.state.email)
     }
   }
 
@@ -60,7 +66,7 @@ class User extends Component {
       </Button>
     )
 
-    return (
+    const datosUser = (
       <Container fluid>
         <Row className="justify-content-center">
           <Col xs={12} sm={10} md={8} lg={6} xl={4} ><h3>Tus datos:</h3></Col>
@@ -109,13 +115,18 @@ class User extends Component {
         </Form>
       </Container>
     )
+
+    return (
+      this.props.isAuthenticated ? datosUser : (<span></span>)
+    )
   }
 }
 
 const mapStateToProps = state => ({
   user: state.auth.user,
   errorMsg: state.errors.msg,
-  isLoading: state.auth.isLoading
+  isLoading: state.auth.isLoading,
+  isAuthenticated: state.auth.isAuthenticated
 })
 
 export default connect(mapStateToProps, { updateUser })(User);
